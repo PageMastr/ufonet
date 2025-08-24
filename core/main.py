@@ -21,7 +21,7 @@ except:
 try:
     from urllib.parse import urlparse as urlparse
 except:
-    from urlparse import urlparse as urlparse
+    from urllib import urlparse as urlparse
 try:
     import urllib.request, urllib.error, urllib.parse
 except:
@@ -3935,7 +3935,7 @@ class UFONet(object):
                 q = 'instreamset:(url):"' + str(dork) + '"' # set query from a dork to search literally on results
             query_string = { 'q':q }
             data = urllib.parse.urlencode(query_string)
-            from duckduckgo_search import DDGS # import search engine wrapper lib
+            from ddgs import DDGS # import search engine wrapper lib
             if options.num_results: # set number of results to search
                 try:
                     num_results = int(options.num_results)
@@ -4680,7 +4680,7 @@ class UFONet(object):
                     if rpc_timeout < 1:
                         rpc_timeout = 5 
                     req = urllib.request.Request(rpc, rpc_exploit.encode('utf-8'), headers)
-                    urllib.request.urlopen(req, context=self.ctx, timeout=rpc_timeout)
+                    target_reply = urllib.request.urlopen(req, context=self.ctx, timeout=rpc_timeout).read().decode('utf-8')
                     self.rpcs_hit = self.rpcs_hit + 1 # add rpc hit to stats
                     if self.options.verbose:
                         print("[Info] [X-RPCs] Reply:", target_reply)
@@ -5819,6 +5819,7 @@ class UFONet(object):
                 update_reply = "N"
             if update_reply == "y" or update_reply == "Y":
                 try: # send HEAD connection
+                    target = self.options.target  # Fix: define target before use
                     self.head = True
                     reply = self.connect_zombie(target)
                     self.head = False

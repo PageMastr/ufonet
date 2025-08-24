@@ -14,7 +14,7 @@ import sys, time
 if sys.version_info[0] != 3:
     sys.exit("Sorry, UFONet requires Python >= 3")
 
-libs = ("GeoIP", "python-geoip", "pygeoip", "requests", "whois", "scapy", "pycryptodomex", "duckduckgo-search")
+libs = ("GeoIP", "dnspython" "python-geoip", "pygeoip", "requests", "whois", "scapy", "pycryptodomex", "ddgs")
     
 import subprocess, os
 
@@ -41,10 +41,10 @@ def checkeuid():
 
 
 def install(package):
-    subprocess.run(["python3", "-m", "pip", "install", "--upgrade", "pip", "--no-warn-script-location", "--root-user-action=ignore"])
-    subprocess.run(["python3", "-m", "pip", "install", "pycurl", "--upgrade", "--no-warn-script-location", "--root-user-action=ignore"])
+    subprocess.run(["python3", "-m", "pip", "install", "--upgrade", "pip", "--no-warn-script-location", "--root-user-action=ignore", "--break-system-packages"])
+    subprocess.run(["python3", "-m", "pip", "install", "pycurl", "--upgrade", "--no-warn-script-location", "--root-user-action=ignore", "--break-system-packages"])
     for lib in libs:
-        subprocess.run(["python3", "-m", "pip", "install", lib, "--no-warn-script-location", "--ignore-installed", "--root-user-action=ignore"])
+        subprocess.run(["python3", "-m", "pip", "install", lib, "--no-warn-script-location", "--ignore-installed", "--root-user-action=ignore", "--break-system-packages"])
 
 if __name__ == '__main__':
     euid = checkeuid()

@@ -12,7 +12,7 @@ Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 from threading import Thread
 import socket, time, os, base64, re
 try:
-    from urlparse import urlparse
+    from urllib import urlparse
 except:
     from urllib.parse import urlparse
 class Needle(Thread):
